@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+scrapling[all]
+sentence-transformers
+faiss-cpu
+groq
+python-multipart
+curl_cffi
