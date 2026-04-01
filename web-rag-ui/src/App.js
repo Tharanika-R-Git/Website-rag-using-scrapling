@@ -15,7 +15,7 @@ function App() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/ask?url=${encodeURIComponent(
+        `https://ebsite-rag-using-scrapling-tharanika-r-git7566-abqfmytu.leapcell.dev/ask?url=${encodeURIComponent(
           url
         )}&question=${encodeURIComponent(input)}`,
         { method: "POST" }
