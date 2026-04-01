@@ -19,7 +19,9 @@ app.add_middleware(
 @app.get("/")
 def home():
     return {"message": "Web RAG API is running 🚀"}
-
+@app.get("/kaithheathcheck")
+def health_check():
+    return {"message": "Kaithheath is healthy!"}
 
 @app.post("/ask")
 def ask(url: str, question: str):
