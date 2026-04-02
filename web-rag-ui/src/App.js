@@ -1,40 +1,47 @@
 import React, { useState } from "react";
+import { Client } from "@gradio/client";
 
 function App() {
   const [url, setUrl] = useState("");
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const sendMessage = async () => {
     if (!input || !url) return;
 
     const userMsg = { role: "user", text: input };
     setMessages((prev) => [...prev, userMsg]);
-
     setInput("");
+    setLoading(true);
 
     try {
-      const res = await fetch(
-        `https://ebsite-rag-using-scrapling-tharanika-r-git7566-abqfmytu.leapcell.dev/ask?url=${encodeURIComponent(
-          url
-        )}&question=${encodeURIComponent(input)}`,
-        { method: "POST" }
-      );
+      // Connect to the Gradio client
+      const client = await Client.connect("TharaKavin/Web-Rag");
+      
+      // Predict using the /predict endpoint
+      const result = await client.predict("/predict", {
+        url: url,  // Required: The website URL (string)
+        question: userMsg.text,  // Required: The question (string)
+      });
 
-      const data = await res.json();
+      // The result.data is a string (the answer from the "🤖 Answer" Textbox)
+      const answer = result.data || "No response from model";
 
       const botMsg = {
         role: "bot",
-        text: data.answer || data.error || "No response",
+        text: answer,
       };
 
       setMessages((prev) => [...prev, botMsg]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { role: "bot", text: "❌ Backend error" },
+        { role: "bot", text: "❌ API error" },
       ]);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -89,6 +96,12 @@ function App() {
             </span>
           </div>
         ))}
+
+        {loading && (
+          <div style={{ textAlign: "left" }}>
+            <span>🤖 Thinking...</span>
+          </div>
+        )}
       </div>
 
       {/* Input */}

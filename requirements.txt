@@ -1,3 +1,4 @@
+gradio
 fastapi
 uvicorn
 scrapling[all]
@@ -6,3 +7,4 @@ faiss-cpu
 groq
 python-multipart
 curl_cffi
+python-dotenv
