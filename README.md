@@ -16,6 +16,9 @@ A modular, production-ready **Retrieval-Augmented Generation (RAG)** backend tha
 
 ---
 
+## Output
+![Output](./output.jpg)
+
 ## 🚀 Installation
 
 ### Backend (Python, FastAPI)
